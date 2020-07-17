@@ -1,0 +1,61 @@
+<%- include ('header') %>
+
+    <!-- content shop collection -->
+        <div class="content-shop-collection">
+            <div class="left pt-5 pl-5">
+                <div class="accordion">
+                    <p>Filter By</p>
+                    <hr>
+                    <div class="collection">
+                        <p>Category <span>---</span></p>
+                        <ul>
+                            <li>
+                                <a data-class="all" href="/shop-collect">All</a>
+                            </li>
+                            <li>
+                                <a data-class="tshirts" href="/cate.tshirt">T-Shirt</a>
+                            </li>
+                            <li>
+                                <a data-class="body" href="/cate.bodysuit">Bodysuits</a>
+                            </li>
+                            <li>
+                                <a data-class="Toy" href="/cate.toy">Toy</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div class="color">
+                        <p>Color <span>+</span></p>
+                        <ul>
+                            <li class="pink"></li>
+                            <li class="lighblue"></li>
+                            <li class="lightcoral"></li>
+                        </ul>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="right">
+                <div class="container">
+                    <div class="row">
+                        <ul>
+                            <% var time = 0; %>
+                            <% data.forEach(function(motsp){ %>
+                            <li class="wow animate__fadeInUpBig" data-wow-duration="1s" data-wow-delay = "<%= time %>s"> 
+                                <a style="cursor: default;" href="/item.<%= motsp._id %>">
+                                    <div class="card text-left">
+                                        <img class="card-img-top" height="300px" src="<%= motsp.images[0] %>" alt="">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><%= motsp.title %></h4>
+                                            <p class="card-text"><%= motsp.price %> VNĐ</p>
+                                        </div>                                        
+                                    </div>
+                                </a>
+                            </li>
+                            <% }) %>                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+<%- include ('footer') %>

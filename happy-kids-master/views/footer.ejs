@@ -1,0 +1,109 @@
+<!-- footer -->
+    <footer class="mt-sm-5 pt-sm-5">
+        <div class="row logo-footer ml-0">
+            <hr width="100%">
+            <img src="./images/logo.png" alt="">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <ul>
+                        <li>
+                            <a href="">Home</a>
+                        </li>
+                        <li>
+                            <a href="">Shop Collection</a>
+                        </li>
+                        <li>
+                            <a href="">Our Story</a>
+                        </li>
+                        <li>
+                            <a href="">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-pinterest-p"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <ul>
+                        <li>
+                            <a href="">Shipping & Returns</a>
+                        </li>
+                        <li>
+                            <a href="">Store Policy</a>
+                        </li>
+                        <li>
+                            <a href="">Payment Methods</a>
+                        </li>
+                        <li>
+                            <a href="">FAQ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row footer mb-5">
+                <div class="col-sm-8 offset-2">
+                    <span>Join Our Mailing List</span>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter your email here*" style="color: black; display: inline-block; width: 60%; border-radius: 0;">
+                    <a href="" class="btn btn-secondary">Subscribe Now</a>
+                </div>
+            </div>
+            <span style="font-size: 15px; font-family: var(--font-text); text-align: center;" class="pb-3">© 2020 by vynguyen. Proudly created with Team</span>
+        </div>
+    </footer>
+    <!-- end footer  -->
+    <script src="./vendor/bootstrap.js"></script>
+    <script src="./javascripts/main.js"></script>
+    <script>
+        Dropzone.options.uploadWidget = {
+  paramName: 'file',
+  maxFilesize: 2, // MB
+  maxFiles: 1,
+  dictDefaultMessage: 'Drag an image here to upload, or click to select one',
+  headers: {
+    'x-csrf-token': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
+  },
+  acceptedFiles: 'image/*',
+  init: function() {
+    this.on('success', function(file, resp){
+      console.log(file);
+      console.log(resp);
+    });
+    this.on('thumbnail', function(file) {
+      if (file.accepted !== false) {
+        if (file.width < 640 || file.height < 480) {
+          file.rejectDimensions();
+        }
+        else {
+          file.acceptDimensions();
+        }
+    }
+    });
+  },
+  accept: function(file, done) {
+    file.acceptDimensions = done;
+    file.rejectDimensions = function() {
+      done('The image must be at least 640 x 480px')
+    };
+  }
+};
+    </script>
+</body>
+</html>
