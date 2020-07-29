@@ -1,20 +1,117 @@
-<%- include ('header') %>
-
-<!-- login -->
-    <div class="signup-form">
-    <form action="/examples/actions/confirmation.php" method="post">
-        <h2 class="text-center">Login</h2>   
-        <div class="form-group has-error">
-        	<input type="text" class="form-control" name="username" placeholder="Username" required="required">
-        </div>
-		<div class="form-group">
-            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
-        </div>        
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
-        </div>
-        <p class="text-center small">Don't have an account? <a href="/sign-up">Sign up here!</a></p>
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include partials/head %>
+  </head>
+  <body>
+    <header>
+    <% include partials/header %>
+    </header>
+    <div class="tt-breadcrumb">
+      <div class="container">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li>Login</li>
+        </ul>
+      </div>
     </div>
-    <!-- end login -->
-    <%- include ('footer') %>
+    <div id="tt-pageContent">
+      <div class="container-indent">
+        <div class="container">
+          <h1 class="tt-title-subpages noborder">Already SignUp?</h1>
+          <div class="tt-login-form">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="tt-item">
+                  <h2 class="tt-title">NEW TO HAPPYKIDS</h2>
+                  <p>
+                    By creating an account with our store, you will be able to move through the payment process faster, store multiple shipping addresses, view and track your orders in your account and more ...
+                  </p>
+                  <div class="form-group">
+                    <a href="/create-account" class="btn btn-top btn-border"
+                      >SIGN UP NOW!</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="tt-item">
+                  <h2 class="tt-title">Login</h2>
+
+                  <div class="form-default form-top">
+                    <form
+                      id="customer_login"
+                      method="POST"
+                      novalidate="novalidate"
+                      action="/login"
+                    >
+                      <%if (message != "undefined") { %>
+                      <div
+                        class="form-group form-control error"
+                        style="background-color: #FFCCCC; font-weight: bold; color : rgb(210, 29, 29)"
+                      >
+                        <%= message %>
+                      </div>
+                      <% } %>
+
+                      <div class="form-group">
+                        <label for="username">Username *</label>
+                        <div class="tt-required">* Require</div>
+                        <input
+                          type="text"
+                          name="username"
+                          class="form-control"
+                          id="username"
+                          placeholder="Username"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input
+                          type="password"
+                          name="password"
+                          class="form-control"
+                          id="password"
+                          placeholder="Password"
+                        />
+                      </div>
+                      <div class="row">
+                        <div class="col-auto mr-auto">
+                          <div class="form-group">
+                            <button class="btn btn-border" type="submit">
+                              Login
+                            </button>
+                          </div>
+                        </div>
+                        <div class="col-auto align-self-end">
+                          <div class="form-group">
+                            <ul class="additional-links">
+                              <li>
+                                <a href="/forgot-password">Forget Password?</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <% include partials/footer %>
+    </footer>
+    <a href="#" class="tt-back-to-top">BACK TO TOP</a>
+    <!-- Partials -->
+    <% include partials/modal-addtocartproduct %> 
+    <% include partials/modal-quickviewmodal %> 
+    <% include partials/modal-videoproduct %>
+    <% include partials/modal-subscribegood %> 
+    <% include partials/modal-newsletter %> 
+    <% include partials/script %>
+  </body>
+</html>

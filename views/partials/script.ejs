@@ -1,0 +1,66 @@
+<script src="/external/jquery/jquery.min.js"></script>
+<script src="/external/bootstrap/js/bootstrap.min.js"></script>
+<script src="/external/slick/slick.min.js"></script>
+<script src="/external/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="/external/panelmenu/panelmenu.js"></script>
+<script src="/external/instafeed/instafeed.min.js"></script>
+<script src="/external/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+<script src="/external/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+<script src="/external/countdown/jquery.plugin.min.js"></script>
+<script src="/external/countdown/jquery.countdown.min.js"></script>
+<script src="/external/lazyLoad/lazyload.min.js"></script>
+<script src="/javascripts/main.js"></script>
+<script src="/javascripts/filter-prod.js"></script>
+
+<script>
+  $(".add-cart").click(function(e) {
+    const id = $(this).attr("data-id");
+    $.ajax({
+      url: "/add-to-cart/" + id,
+      method: "GET",
+      success: data => {
+        $(".box-cart").load(" .box-cart > *");
+      }
+    });
+  });
+</script>
+<script>
+  Dropzone.options.uploadWidget = {
+  paramName: 'file',
+  maxFilesize: 2, // MB
+  maxFiles: 1,
+  dictDefaultMessage: 'Drag an image here to upload, or click to select one',
+  headers: {
+  'x-csrf-token': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
+  },
+  acceptedFiles: 'image/*',
+  init: function() {
+  this.on('success', function(file, resp){
+  console.log(file);
+  console.log(resp);
+  });
+  this.on('thumbnail', function(file) {
+  if (file.accepted !== false) {
+    if (file.width < 640 || file.height < 480) {
+      file.rejectDimensions();
+    }
+    else {
+      file.acceptDimensions();
+    }
+  }
+  });
+  },
+  accept: function(file, done) {
+  file.acceptDimensions = done;
+  file.rejectDimensions = function() {
+  done('The image must be at least 640 x 480px')
+  };
+  }
+  };
+</script>
+
+<!-- form validation and sending to mail -->
+<script src="/external/form/jquery.form.js"></script>
+<script src="/external/form/jquery.validate.min.js"></script>
+<script src="/external/form/jquery.form-init.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
