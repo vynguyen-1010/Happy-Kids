@@ -1,5 +1,6 @@
-<script src="/external/jquery/jquery.min.js"></script>
 <script src="/external/bootstrap/js/bootstrap.min.js"></script>
+<script src="/external/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/external/jquery/jquery.min.js"></script> 
 <script src="/external/slick/slick.min.js"></script>
 <script src="/external/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="/external/panelmenu/panelmenu.js"></script>
@@ -11,7 +12,17 @@
 <script src="/external/lazyLoad/lazyload.min.js"></script>
 <script src="/javascripts/main.js"></script>
 <script src="/javascripts/filter-prod.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+<!-- Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
+<!--Menu Toggle-->
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+</script>
 <script>
   $(".add-cart").click(function(e) {
     const id = $(this).attr("data-id");
@@ -24,6 +35,7 @@
     });
   });
 </script>
+
 <script>
   Dropzone.options.uploadWidget = {
   paramName: 'file',
@@ -63,4 +75,3 @@
 <script src="/external/form/jquery.form.js"></script>
 <script src="/external/form/jquery.validate.min.js"></script>
 <script src="/external/form/jquery.form-init.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

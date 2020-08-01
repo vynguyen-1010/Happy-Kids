@@ -1,52 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<% include partials/head %>
-</head>
-<body>
-    <% include partials/loader %>
-<header>
-    <% include partials/header %>
-</header>
-    <div class="container du-lieu">
-        <h2  class="mt-3">Create New Item</h2>
-        <a  href="/addProduct" class="btn btn-success mt-2 mb-5">New item</a>
-        <a  href="/index" class="btn btn-success mt-2 mb-5">Back home</a>
-        <div class="jumbotron text-center">
-            <h1 class="display-3">Xem dữ liệu</h1>
-            <p class="lead">đổ ra từ mongodb</p>
-            <hr class="my-2">
-            <table class="table table-striped table-inverse ">
-                <thead class="thead-inverse">
+<% include partials/dashboard %>
+<div class="container">
+    <hr>
+    <div class="row">
+        <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <h3 class="panel-title">Products</h3>
+                <button type="button" class="btn btn-dark rounded-0"><a href="/admin/product/add">Add Product</a></button>
+            </div>
+            <table class="table">
+                <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% prod.forEach(function(item){ %>
-                        <tr>
-                            <td scope="row"> <%= item.name %></td>
-                            <td><%= item.description %></td>
+                        <th><input type="text" class="form-control" placeholder="Tên" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Hình ảnh" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Giá" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Số lượng" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Kích cỡ" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Category Parent" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Category Child" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Ngày nhập hàng" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="#" disabled></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% prod.forEach(function(product){ %>
+                    <tr>
+                        <td scope="row"> <a href="/<%= product._id %>"><%= product.name %></a></td>
+                        <td> <img src="<%= product.images[0] %>" data-src="<%= product.images[0] %>" alt="..."></td>
+                            <td><%= product.price %></td>
+                            <td><%= product.stock %></td>
+                            <td><%= product.size %></td>
+                            <td><%= product.productType.main %></td>
+                            <td><%= product.productType.sub %></td>
+                            <td><%= product.dateAdded %></td>
                             <td>
-                                <a href="" class="btn btn-danger">Edit</a> 
-                                <a class="btn btn-secondary">Delete</a>                                
+                                <a href="/" class="btn btn-danger rounded-0">Edit</a> 
+                                <a href="/delete.<%= product._id %>" class="btn btn-secondary rounded-0">Delete</a>                                
                             </td>
-                        </tr>
-                      <% }) %>
-                    </tbody>
+                        <td>                            
+                    </tr>
+                    <% }) %>
+                </tbody>
             </table>
         </div>
     </div>
-<footer>
-    <% include partials/footer %>
-</footer>
-<!-- Partials -->
-<% include partials/modal-addtocartproduct %>
-<% include partials/modal-quickviewmodal %>
-<% include partials/modal-videoproduct %>
-<% include partials/modal-subscribegood %>
-
+</div>
+<!-- /#page-content-wrapper -->
 <% include partials/script %>
 </body>
 </html>

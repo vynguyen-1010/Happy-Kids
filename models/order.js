@@ -3,10 +3,12 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
   user: {
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.Object,
     ref: "User"
   },
-  cart: { type: Object, required: true },
+  cart: { 
+    type: Object, 
+    required: true },
   address: {
     type: String,
     required: true
@@ -19,6 +21,15 @@ const orderSchema = new Schema({
   phoneNumber: {
     type: Number,
     required: true
+  },
+  //
+  orderStatus: {
+    type: String,
+    default: "Đang chờ xử lý"
+  },
+  totalPrice: {
+    type: Number,
+    default: 0
   }
 });
 

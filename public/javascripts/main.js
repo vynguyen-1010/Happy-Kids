@@ -1,3 +1,5 @@
+
+
 (function($) {
   'use strict';
 
@@ -3246,6 +3248,7 @@
         }
       });
     }
+    
 
     $.fn.resizeRevolution = function(options, new_rev_obj, bp_arr) {
       if (!$(this).length || !$(options.slider).length || !options.breakpoints) return false;

@@ -4,22 +4,21 @@
     <% include partials/head %>
   </head>
   <body>
-    <% include partials/loader %>
     <header>
-      <% include partials/header %>
+    <% include partials/header %>
     </header>
     <div class="tt-breadcrumb">
       <div class="container">
         <ul>
           <li><a href="/">Home</a></li>
-          <li>Giỏ hàng</li>
+          <li>Shopping Cart</li>
         </ul>
       </div>
     </div>
     <div id="tt-pageContent">
       <div class="container-indent">
         <div class="container">
-          <h1 class="tt-title-subpages noborder">GIỎ HÀNG</h1>
+          <h1 class="tt-title-subpages noborder">SHOPPING CART</h1>
           <div class="tt-shopcart-table-02">
             <table>
               <tbody>
@@ -29,8 +28,9 @@
                   <td>
                     <div class="tt-product-img">
                       <img
-                        src="<%= item.images %>"
-                        data-src="<%= item.images %>"
+                        src="<%= item.item.images[0] %>"
+                        data-src="<%= item.item.images[0] %>"
+                        class="loaded"
                         alt=""
                       />
                     </div>
@@ -42,13 +42,13 @@
                       >
                     </h2>
                     <ul class="tt-list-description">
-                      <li>Cỡ: 22</li>
-                      <li>Màu: Green</li>
+                      <li>Size: <%= item.item.size %></li>
+                      <li>Color: </li>
                     </ul>
                     <ul class="tt-list-parameters">
                       <li>
                         <div class="tt-price">
-                          $<%= item.price %>
+                          <%= item.price %> VND
                         </div>
                       </li>
                       <li>
@@ -56,14 +56,14 @@
                       </li>
                       <li>
                         <div class="tt-price subtotal">
-                          $<%= item.price %>
+                          <%= item.price %> VND
                         </div>
                       </li>
                     </ul>
                   </td>
                   <td>
                     <div class="tt-price">
-                      $<%= item.item.price %>
+                      <%= item.item.price %> VND
                     </div>
                   </td>
                   <td>
@@ -81,7 +81,7 @@
 
                   <td class="box-pricei<%= item.item._id %>">
                     <div class="tt-price subtotal">
-                      $<%= item.price %>
+                      <%= item.price %> VND
                     </div>
                   </td>
 
@@ -98,15 +98,15 @@
             <div class="tt-shopcart-btn">
               <div class="col-left">
                 <a class="btn-link" href="/"
-                  ><i class="icon-e-19"></i>Tiếp tục mua sắm</a
+                  ><i class="icon-e-19"></i>Continue Shopping</a
                 >
               </div>
               <div class="col-right">
                 <a class="btn-link" href="/delete-cart"
-                  ><i class="icon-h-02"></i>Xoá giỏ hàng</a
+                  ><i class="icon-h-02"></i>Delete Cart</a
                 >
                 <a class="btn-link" href="/shopping_cart"
-                  ><i class="icon-h-48"></i>Cập nhật giỏ hàng</a
+                  ><i class="icon-h-48"></i>Update Cart</a
                 >
               </div>
             </div>
@@ -120,14 +120,14 @@
                   <table class="tt-shopcart-table01 box-pricett">
                     <tbody>
                       <tr>
-                        <th>Tổng hàng</th>
-                        <td>$<%= session.cart.totalPrice %></td>
+                        <th>SUBTOTAL</th>
+                        <td><%= session.cart.totalPrice %> VND</td>
                       </tr>
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Tổng tất cả</th>
-                        <td>$<%= session.cart.totalPrice %></td>
+                        <th>TOTAL</th>
+                        <td><%= session.cart.totalPrice %> VND</td>
                       </tr>
                     </tfoot>
                   </table>
@@ -135,24 +135,21 @@
                   <%if (typeof(user) !== 'undefined' && user.isAuthenticated) {
                   %>
                   <a href="/add-order" class="btn btn-lg"
-                    ><span class="icon icon-check_circle"></span>Chấp nhận thanh
-                    toán</a
+                    ><span class="icon icon-check_circle"></span>Accept Payment</a
                   >
                   <% }else if(typeof(user) == 'undefined'){ %>
                   <a href="/login" class="btn btn-lg">
-                    <span class="icon icon-check_circle"></span>Đăng nhập để
-                    thanh toán
+                    <span class="icon icon-check_circle"></span>Login to checkout!
                   </a>
 
                   <% }else if(typeof(user) !== 'undefined' &&
                   !user.isAuthenticated){ %>
                   <a href="/verify-email" class="btn btn-lg"
-                    ><span class="icon icon-check_circle"></span>Kích hoạt email
-                    để thanh toán</a
+                    ><span class="icon icon-check_circle"></span>Vertify email to checkout!</a
                   >
                   <% }}else  {%>
                     <a href="javascript:void(0)" class="btn btn-lg"
-                    ><span class="icon icon-check_circle"></span>Giỏ hàng rỗng!!</a
+                    ><span class="icon icon-check_circle"></span>Cart is empty!!</a
                   >
                   <%}%>
                 </div>
@@ -163,7 +160,7 @@
       </div>
     </div>
     <footer>
-      <% include partials/footer %>
+    <% include partials/footer %>
     </footer>
     <a href="#" class="tt-back-to-top">BACK TO TOP</a>
     <!-- Partials -->

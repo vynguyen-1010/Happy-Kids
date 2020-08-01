@@ -1,50 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <% include partials/head %>
-    <body>
-    <header>
-        <% include partials/header %>
-    </header>
-        <div class="container du-lieu">      
-            <div class="jumbotron text-center">
-                <h1 class="display-3">Thêm dữ liệu</h1>
-            </div>
-            <form id="upload-widget" method="post"  action="/upimage" class="dropzone"></form>
-            <form method="post" action="/addProduct">
-            <div class="form-group">
-                <label for="name">Title</label>
-                <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm">
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" class="form-control" name="description" placeholder="Chi tiết">
-            </div>
-            <div class="form-group">
-                <label for="price">Price</label>
-                <input type="number" class="form-control" name="price" placeholder="Giá">
-            </div>
-            <div class="form-group">
-                <label for="stock">Stock</label>
-                <input type="number" class="form-control" name="stock" placeholder="Số lượng sản phẩm">
-            </div>
-            <div class="form-group">
-                <label for="size">Size</label>
-                <input type="text" class="form-control" name="size" placeholder="Size available">
-            </div>
-
-            <button style="width: 25%;" type="submit" class="btn btn-secondary pt-2 pb-2">Submit</button>
-        </form>  
+<% include partials/dashboard %>
+        <div class="container">      
+        <div class="panel-heading">
+            <hr>
+            <h3 class="panel-title">Thêm dữ liệu</h3>
+            <h4>* Require</h4>
         </div>
-<footer>
-	<% include partials/footer %>
-</footer>
-    <% include partials/modal-addtocartproduct %>
-    <% include partials/modal-quickviewmodal %>
-    <% include partials/modal-videoproduct %>
-    <% include partials/modal-subscribegood %>
+        <form id="upload-widget" method="post" action="/upimage" class="dropzone m-3"></form>
+
+        <form method="post">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="name">Tên sản phẩm</label>
+                    <input type="text" class="form-control" name="name">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="main">Main Category</label>
+                    <input type="text" class="form-control" name="main">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="sub">Sub Category</label>
+                    <input type="text" class="form-control" name="sub">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="price">Giá</label>
+                    <input type="number" class="form-control" name="price">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="stock">Số lượng</label>
+                    <input type="number" class="form-control" name="stock">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="size">Size</label>
+                    <select class="js-example-basic-multiple form-control" name="size" multiple="multiple">
+                        <option value="S"> S </option>
+                        <option value="M"> M </option>
+                        <option value="L"> L </option>
+                        <option value="XL"> XL </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="description">Chi tiết</label>
+                    <input type="text" class="form-control" name="description">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="labels">Nhãn hiệu</label>
+                    <input type="text" class="form-control" name="labels">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="materials">Chất liệu</label>
+                    <input type="text" class="form-control" name="materials">
+                </div>
+            </div>
+        </div>
+        <button style="width: 100%;" type="submit" class="btn btn-secondary rounded-0">Submit</button>
+    </form>  
+    <!-- /#page-content-wrapper -->
     <% include partials/script %>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.js-example-basic-multiple').select2({
+            allowClear: true,
+        });
+    });
+    </script>
 </body>
 </html>

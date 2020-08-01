@@ -1,0 +1,32 @@
+<% include partials/dashboard %>
+<div class="container">
+    <hr>
+    <div class="row">
+        <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <h3 class="panel-title">Category</h3>
+                <button type="button" class="btn btn-dark rounded-0"><a href="/admin/category/add">Add Category</a></button>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><input type="text" class="form-control" placeholder="Main" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Sub" disabled></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% category.forEach(function(cat){ %>
+                    <tr>
+                        <td><%= cat.name %></td>
+                        <td><%= cat.childName %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /#page-content-wrapper -->
+<% include partials/script %>
+</body>
+</html>

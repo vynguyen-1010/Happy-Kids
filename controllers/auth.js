@@ -75,7 +75,7 @@ exports.getVerifyEmail = (req, res, next) => {
   var transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-      user: "nocodenolife2527@gmail.com",
+      user: "haivl.clgt1990@gmail.com",
       pass: "password2527@"
     }
   });
@@ -168,11 +168,11 @@ exports.postForgotPass = (req, res, next) => {
         length: 6
       });
       var mainOptions = {
-        from: "Crepp so gud",
+        from: "Hello!",
         to: email,
-        subject: "Test",
-        text: "text ne",
-        html: "<p>Mật khẩu mới của bạn là:</p>" + tpass
+        subject: "Password Changing!",
+        text: "I heard you forgot our password! ",
+        html: "<p>Here is your new password:</p>" + tpass
       };
       transporter.sendMail(mainOptions, (err, info) => {
         if (err) {

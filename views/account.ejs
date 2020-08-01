@@ -4,26 +4,25 @@
     <% include partials/head %>
   </head>
   <body>
-    <% include partials/loader %>
     <header>
-      <% include partials/header %>
+    <% include partials/header %>
     </header>
     <div class="tt-breadcrumb">
       <div class="container">
         <ul>
-          <li><a href="/">Trang chủ</a></li>
-          <li>Tài khoản</li>
+          <li><a href="/">Home</a></li>
+          <li>Account</li>
         </ul>
       </div>
     </div>
     <div id="tt-pageContent">
       <div class="container-indent">
         <div class="container container-fluid-custom-mobile-padding">
-          <h1 class="tt-title-subpages noborder">Tài khoản</h1>
+          <h1 class="tt-title-subpages noborder">Account</h1>
           <div class="tt-shopping-layout">
-            <h2 class="tt-title-border">Tài khoản của tôi</h2>
+            <h2 class="tt-title-border">My account</h2>
             <div class="tt-wrapper">
-              <h3 class="tt-title">Lịch sử đặt hàng</h3>
+              <h3 class="tt-title">Order history!</h3>
               <%if (messageSucc != "undefined") { %>
               <div
                 class="error"
@@ -44,11 +43,12 @@
                 <table class="tt-table-shop-01">
                   <thead>
                     <tr>
-                      <th>Đơn hàng</th>
-                      <th>Ngày</th>
-                      <th>Địa chỉ</th>
-                      <th>SĐT</th>
-                      <th>Tổng</th>
+                      <th>Số Order</th>
+                      <th>Ngày Order</th>
+                      <th>Địa chỉ nhận</th>
+                      <th>SĐT Nhận</th>
+                      <th>Tổng tiền</th>
+                      <th>Tình trạng</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -61,8 +61,10 @@
                         <%= o.phoneNumber %>
                       </td>
                       <td>
-                        $<%= o.cart.totalPrice %> cho <%= o.cart.totalQty %> sản
-                        phẩm
+                        <%= o.cart.totalPrice %> VND cho <%= o.cart.totalQty %> sản phẩm
+                      </td>
+                      <td>
+                        <%= o.orderStatus %>
                       </td>
                     </tr>
                     <% }) %>
@@ -71,37 +73,35 @@
               </div>
             </div>
             <div class="tt-wrapper">
-              <h3 class="tt-title">Thông tin tài khoản</h3>
+              <h3 class="tt-title">Account Info</h3>
               <div class="tt-table-responsive">
                 <table class="tt-table-shop-02">
                   <tbody>
                     <tr>
-                      <td>Tên:</td>
+                      <td>Full name:</td>
                       <td><%= user.firstName %> <%= user.lastName %></td>
                     </tr>
                     <tr>
-                      <td>E-MAIL:</td>
+                      <td>Email:</td>
                       <td><%= user.email %></td>
                     </tr>
                     <tr>
-                      <td>Địa chỉ:</td>
+                      <td>Address:</td>
                       <td>
                         <%= user.address %>
                       </td>
                     </tr>
 
                     <tr>
-                      <td>Số điện thoại:</td>
+                      <td>Phone Number:</td>
                       <td><%= user.phoneNumber %></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <a href="/account-change-info" class="btn btn-border"
-                >Thay đổi thông tin</a
-              >
-            </div>
-            <a href="/change-password" class="btn btn-border">Đổi mật khẩu</a>
+              <a href="/account-change-info" class="btn btn-border rounded-0">Change infomation</a>
+              </div>
+              <a href="/change-password" class="btn btn-border rounded-0">Change Password!!</a>
           </div>
         </div>
       </div>
@@ -111,9 +111,6 @@
     </footer>
     <a href="#" class="tt-back-to-top">BACK TO TOP</a>
     <!-- Partials -->
-    <% include partials/modal-addtocartproduct %> <% include
-    partials/modal-quickviewmodal %> <% include partials/modal-videoproduct %>
-    <% include partials/modal-subscribegood %> <% include
-    partials/modal-newsletter %> <% include partials/script %>
+    <% include partials/script %>
   </body>
 </html>

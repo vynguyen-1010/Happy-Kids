@@ -10,11 +10,10 @@ const session = require('express-session');
 const passport = require('passport');
 const shopRouter = require('./routes/shop');
 const authRouter = require('./routes/auth');
+const productRouter = require('./routes/product');
 const flash = require('connect-flash');
 const app = express();
-const MongoDBStore = require('connect-mongodb-session')(session);
 const Cart = require('./models/cart');
-const Product = require('./models/product');
 const compression = require('compression');
 app.use(compression());
 mongoose.set('useCreateIndex', true);
@@ -22,23 +21,21 @@ mongoose.set('useCreateIndex', true);
 //const urlConnect = process.env.DB;
 
 // Connect to database
-mongoose.connect('mongodb://localhost:27017/Test', { useNewUrlParser: true, useUnifiedTopology: true }, err => {
+mongoose.connect('mongodb://localhost:27017/Test',  {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}, err => {
   if (err) throw err;
-  console.log('Connect successfullyy! http://localhost:3000/');
+  console.log('Connected!! --> http://localhost:3000/admin');
 });
 
 // view engine setup
+app.use('/uploads', express.static('uploads'));
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use('/', shop);
-app.use('/uploads', express.static('uploads'));
-//app.use('/product', productRouter);
-//var productRouter = require('./routes/product');
-//app.use('/users', users);
 app.use(cookieParser());
 app.use(flash());
 app.use(
@@ -60,6 +57,7 @@ app.use(passport.session());
 
 app.use(shopRouter);
 app.use(authRouter);
+app.use(productRouter);
 
 // pass passport for configuration
 require('./config/passport')(passport);

@@ -4,13 +4,12 @@ const Schema = mongoose.Schema;
 const productCategorySchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
-
   childName: {
     type: [String],
-    required: true
-  }
+    required: true,
+  },
 });
 
 const productCategory = mongoose.model(

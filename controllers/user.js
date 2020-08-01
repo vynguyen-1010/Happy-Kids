@@ -1,6 +1,7 @@
 const Users = require("../models/user");
 const Cart = require("../models/cart");
 const Order = require("../models/order");
+const User = require("../models/user");
 
 exports.getAccount = (req, res, next) => {
   var cartProduct;
@@ -47,4 +48,22 @@ exports.postAccountChange = (req, res, next) => {
   req.user.phoneNumber = req.body.phoneNumber;
   req.user.save();
   res.redirect("/account");
+};
+
+
+exports.getAccountList = (req, res, next) => {
+  var cartProduct;
+  if (!req.session.cart) {
+    cartProduct = null;
+  } else {
+    var cart = new Cart(req.session.cart);
+    cartProduct = cart.generateArray();
+  }
+  Users.find().then(order => {
+    res.render("viewAccount", {
+      title: "Account List",
+      user: req.user,
+      order: order,
+    });
+  });
 };

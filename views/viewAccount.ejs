@@ -1,0 +1,44 @@
+<% include partials/dashboard %>
+    <div class="container">
+        <hr>
+        <div class="row">
+            <div class="panel panel-primary filterable">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Users</h3>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><input type="text" class="form-control" placeholder="First Name" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Last Name" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Username" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Email" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Address" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Phone Number" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Vertify" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Role" disabled></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% order.forEach(function(u){ %>
+                            <tr>
+                                <td><%= u.firstName %></td>
+                                <td><%= u.lastName %></td>
+                                <td><%= u.username %></td>
+                                <td><%= u.email %></td>
+                                <td><%= u.address %></td>
+                                <td><%= u.phoneNumber %></td>
+                                <td><%= u.isAuthenticated %></td>
+                                <td><%= u.role %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-content-wrapper -->
+<% include partials/script %>
+</body>
+</html>

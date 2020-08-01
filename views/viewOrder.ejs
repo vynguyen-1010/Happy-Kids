@@ -1,0 +1,42 @@
+<% include partials/dashboard %>
+    <div class="container">
+        <hr>
+        <div class="row">
+            <div class="panel panel-primary filterable">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Users</h3>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><input type="text" class="form-control" placeholder="UserID" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Item" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Ngày đặt hàng" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Địa chỉ nhận" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Số điện thoại" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Nhận" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Tình trạng" disabled></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% order.forEach(function(o){ %>
+                            <tr>
+                                <td><%= o.user %></td>
+                                <td><%= o.cart.totalQty %></td>
+                                <td><%= o.date %></td>
+                                <td><%= o.address %></td>
+                                <td><%= o.phoneNumber %></td>
+                                <td><%= o.cart.totalPrice %> USD</td>
+                                <td><%= o.orderStatus %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-content-wrapper -->
+<% include partials/script %>
+</body>
+</html>
