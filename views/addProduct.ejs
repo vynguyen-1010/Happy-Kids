@@ -5,8 +5,7 @@
             <h3 class="panel-title">Thêm dữ liệu</h3>
             <h4>* Require</h4>
         </div>
-        <form id="upload-widget" method="post" action="/upimage" class="dropzone m-3"></form>
-
+        <form id="upload-widget" method="post" action="/upimage" class="dropzone"></form>
         <form method="post">
         <div class="row">
             <div class="col">
@@ -18,13 +17,23 @@
             <div class="col">
                 <div class="form-group">
                     <label for="main">Main Category</label>
-                    <input type="text" class="form-control" name="main">
+                    <select class="form-control" name="main">
+                    <% category.forEach(function(cat){ %>
+                        <option value="<%= cat.name %>"><%= cat.name %></option>
+                    <% }) %>
+                    </select>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
                     <label for="sub">Sub Category</label>
-                    <input type="text" class="form-control" name="sub">
+                    <select class="form-control" name="sub">
+                    <% category.forEach(function(cat){ %>
+                        <% for (var i = 0; i < category.length; i++) { %>
+                            <option value="<%= cat.childName[i] %>"><%= cat.childName[i] %></option>
+                        <% } %>
+                    <% }) %>
+                    </select>
                 </div>
             </div>
         </div>
@@ -44,11 +53,18 @@
             <div class="col">
                 <div class="form-group">
                     <label for="size">Size</label>
-                    <select class="js-example-basic-multiple form-control" name="size" multiple="multiple">
-                        <option value="S"> S </option>
-                        <option value="M"> M </option>
-                        <option value="L"> L </option>
-                        <option value="XL"> XL </option>
+                    <select class="multiple form-control" name="size" multiple="multiple">
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <select multiple class="multiple-tags form-control" name="tags" multiple="">
                     </select>
                 </div>
             </div>
@@ -58,7 +74,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="description">Chi tiết</label>
-                    <input type="text" class="form-control" name="description">
+                    <textarea  type="text" class="form-control" name="description" rows="1"></textarea>
                 </div>
             </div>
             <div class="col">
@@ -80,8 +96,17 @@
     <% include partials/script %>
     <script type="text/javascript">
         $(document).ready(function() {
-        $('.js-example-basic-multiple').select2({
+        $('.multiple').select2({
             allowClear: true,
+        });
+    });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.multiple-tags').select2({
+            allowClear: true,
+            tags: true,
+            tokenSeparators: [',',' ']
         });
     });
     </script>

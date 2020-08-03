@@ -4,11 +4,9 @@ var mongoose = require('mongoose');
 var router = express.Router();
 const productController = require("../controllers/product");
 
-// Get homepage và product page
+// Get homepage và collection page
 
 router.get("/", productController.getIndexProducts);
-
-
 
 router.get("/products/:productType?/:productChild?",productController.getProducts);
 
@@ -45,9 +43,33 @@ var storage = multer.diskStorage({
     }
   });
 var upload = multer({ storage: storage });
-router.post('/upimage', upload.any(), productController.getImage);
 
-router.get("/admin", productController.viewAdmin);
+// up ảnh slide
+var storage1 = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './image_slides')
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now()+ '-' + file.originalname)
+    }
+  });
+var upLoadImageSlide = multer({ storage: storage1 });
+
+//up ảnh theo chủ đề
+var storage2 = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './image_theme')
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now()+ '-' + file.originalname)
+    }
+  });
+var upLoadImageTheme = multer({ storage: storage2 });
+
+
+router.post('/upimage', upload.any(), productController.getImage);
+router.post('/upimageslides', upLoadImageSlide.any(), productController.getImageSlides);
+router.post('/upimagetheme', upLoadImageTheme.any(), productController.getImageTheme);
 
 router.post("/admin/product/add", productController.postAddProduct);
 
@@ -59,12 +81,30 @@ router.get("/admin/product", productController.viewProductList);
 
 router.get("/admin/order", productController.viewOrderList);
 
+router.post("/admin/order", productController.changeOrderStatus);
+
 router.get("/admin/category", productController.viewCategoryList);
 
 router.post("/admin/category/add", productController.postAddCategory);
 
 router.get("/admin/category/add", productController.getAddCategory);
 
+router.get("/policy", productController.getPolicy);
+router.get("/info", productController.getInfomation);
+router.get("/return", productController.getReturn);
+
+
+
+
+
+
+
+// router.get("/admin/content", productController.getAddContent);
+router.get("/admin/content", productController.getEditContent);
+router.post("/admin/content", productController.postEditContent);
+
+// router.get("/admin/content.:idcansua", productController.getEditContent1);
+// router.post("/admin/content.:idcansua", productController.postEditContent1);
 
 
 

@@ -68,5 +68,3 @@ exports.getProduct = (req, res, next) => {
     });
     res.redirect("back");
   };
-
-

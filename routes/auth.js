@@ -35,4 +35,6 @@ router.post("/change-password", authController.postChangePassword);
 
 router.get("/admin/account", userController.getAccountList);
 
+router.get("/admin", userController.viewAdmin);
+
 module.exports = router;

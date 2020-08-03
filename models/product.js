@@ -30,7 +30,6 @@ const productSchema = new Schema({
   },
   color: {
     type: [String],
-    //required: true
   },
   pattern: {
     type: [String],
@@ -44,7 +43,6 @@ const productSchema = new Schema({
   },
   dateAdded: {
     type: Date,
-//    required: false,
     default: Date.now
   },
   isSale: {
@@ -63,7 +61,6 @@ const productSchema = new Schema({
   ofSellers: {
     userId: {
       type: Schema.Types.ObjectId,
-//    required: true,
       ref: "User"
     },
     name: String

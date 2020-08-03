@@ -1,7 +1,8 @@
+var express = require("express");
+const Products = require("../models/product");
 const Users = require("../models/user");
 const Cart = require("../models/cart");
 const Order = require("../models/order");
-const User = require("../models/user");
 
 exports.getAccount = (req, res, next) => {
   var cartProduct;
@@ -66,4 +67,15 @@ exports.getAccountList = (req, res, next) => {
       order: order,
     });
   });
+};
+
+exports.viewAdmin = (req, res, next) => {
+  Products.find({user: req.user}).then(
+    product => {
+        res.render("viewAdmin", {
+          title: "Admin",
+          prod: product,
+        });
+      }
+    );
 };

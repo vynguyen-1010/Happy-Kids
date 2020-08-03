@@ -73,7 +73,7 @@
                         </div>
                         <h1 class="tt-title"><%= prod.name %></h1>
                         <div class="tt-price">
-                           <span class="new-price"><%= prod.price %> VND</span>
+                           <span class="new-price"><%= prod.price %> USD</span>
                            <span class="old-price"></span>
                         </div>
                         <div class="tt-review">
@@ -102,18 +102,19 @@
                            <div class="tt-wrapper">
                            </div>
                         </div>
-                        <!-- nút số lượng -->
-                        <div class="tt-wrapper">
-                           <div class="tt-row-custom-01">
-                              <div class="col-item">
-                                 <div class="form-group">
-                                   <label for="">Number</label>
-                                   <input type="number"
-                                     class="form-control" name="number" id="" aria-describedby="helpId" placeholder="">                                   
-                                 </div>
-                              </div>
+                        <!-- nút số lượng --> 
+                        <div class="detach-quantity-desctope">
+                           <div
+                             class="tt-input-counter style-01"
+                             data-id="1"
+                           >
+                             <span class="minus-btn"></span>
+                             <input type="text" value="1" size="1" />
+                             <span class="plus-btn"></span>
                            </div>
+
                         </div>
+                        <!-- nút số lượng --> 
                         <div class="tt-wrapper">
                            <div class="tt-row-custom-01">
                               <div class="col-item">
@@ -126,10 +127,10 @@
                         <div class="tt-wrapper">
                            <div class="tt-add-info">
                               <ul>
-                                 <li><span>Category Child :</span> <%= prod.productType.main %></li>
+                                 <li><span>Category:</span> <%= prod.productType.main %></li>
                                  <li><span>Tag:</span>
-                                    <% prod.tags.forEach(function(tag) { %>
-                                    <a href="/search?searchText=<%= tag %>"><%= tag %></a>
+                                    <% prod.tags.forEach(function(t) { %>
+                                       <a href="/search?searchText=<%= t %>">#<%= t %></a>
                                     <% }); %> 
                                  </li>
                               </ul>
@@ -149,7 +150,8 @@
                                     <tbody>
                                        <tr>
                                           <td>Color:</td>
-                                          <td><% prod.color.forEach(function(color) { %>
+                                          <td>
+                                             <% prod.color.forEach(function(color) { %>
                                              <%= color %>
                                              <% }); %> 
                                           </td>
@@ -372,9 +374,9 @@
                                  <i class="icon-star"></i>
                               </div>
                            </div>
-                           <h2 class="tt-title"><a href="product/<%= prod._id %>"><%= prod.name %></a></h2>
+                           <h2 class="tt-title"><a href="/<%= prod._id %>"><%= prod.name %></a></h2>
                            <div class="tt-price">
-                              <%= prod.price %> VND
+                              <%= prod.price %> USD
                            </div>
                         </div>
                      </div>

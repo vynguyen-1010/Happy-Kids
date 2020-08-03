@@ -4,6 +4,10 @@ const Categories = require("../models/productCategory");
 const Cart = require("../models/cart");
 var Users = require("../models/user");
 const Order = require("../models/order");
+const order = require("../models/order");
+const Content = require("../models/content");
+
+const { all } = require("../routes/shop");
 
 var ITEM_PER_PAGE = 12;
 var SORT_ITEM;
@@ -15,6 +19,7 @@ var psize;
 var plabel;
 var plowerprice;
 var price;
+var viewCounts;
 var searchText;
 var chuyenObjectId = require('mongodb').ObjectID;
 
@@ -26,7 +31,6 @@ exports.getIndexProducts = (req, res, next) => {
     var cart = new Cart(req.session.cart);
     cartProduct = cart.generateArray();
   }
-
   Products.find()
     .limit(4)
     .then(products => {
@@ -34,13 +38,17 @@ exports.getIndexProducts = (req, res, next) => {
         .limit(4)
         .sort("buyCounts")
         .then(products2 => {
-          res.render("index", {
-            title: "HOMEPAGE",
-            user: req.user,
-            trendings: products,
-            hots: products2,
-            cartProduct: cartProduct
-          });
+          Content.find({}, function (err, content) { 
+            res.render("index", {
+              title: "HOME",
+              user: req.user,
+              trendings: products,
+              hots: products2,
+              cartProduct: cartProduct,
+              cont: content             
+              
+            });
+           })
         });
     })
     .catch(err => {
@@ -48,9 +56,7 @@ exports.getIndexProducts = (req, res, next) => {
     });
 };
 
-
-
-exports.getProducts = (req, res, next) => {
+exports.getProducts = (req, res, next) => {  
   var cartProduct;
   if (!req.session.cart) {
     cartProduct = null;
@@ -77,6 +83,15 @@ exports.getProducts = (req, res, next) => {
   if (SORT_ITEM == 1) {
     sort_value = "PRICE: LOW TO HIGH";
     price = "1";
+  }
+  
+  if (SORT_ITEM == -2) {
+    sort_value = "VIEW: HIGH TO LOW";
+    viewCounts = "-1";
+  }
+  if (SORT_ITEM == 2) {
+    sort_value = "VIEW: LOW TO HIGH";
+    viewCounts = "1";
   }
 
   if (Object.entries(req.query).length == 0) {
@@ -133,7 +148,8 @@ exports.getProducts = (req, res, next) => {
         .skip((page - 1) * ITEM_PER_PAGE)
         .limit(ITEM_PER_PAGE)
         .sort({
-          price
+          price,
+          viewCounts,
         });
     })
     .then(products => {
@@ -160,8 +176,6 @@ exports.getProducts = (req, res, next) => {
       console.log(err);
     });
 };
-
-
 
 exports.postNumItems = (req, res, next) => {
   ITEM_PER_PAGE = parseInt(req.body.numItems);
@@ -214,8 +228,6 @@ exports.getSearch = (req, res, next) => {
       console.log(err);
     });
 };
-
-
 
 exports.getCart = (req, res, next) => {
   var cartProduct;
@@ -312,7 +324,7 @@ exports.addOrder = (req, res, next) => {
   });
 };
 
-exports.postAddOrder = async (req, res, next) => {
+exports.postAddOrder = (req, res, next) => {
   console.log(req.session.cart);
   if (req.session.cart.totalQty) {
     var order = new Order({
@@ -324,7 +336,7 @@ exports.postAddOrder = async (req, res, next) => {
     });
 
     for (var id in req.session.cart.items) {
-      await Products.findOne({ _id: id })
+      Products.findOne({ _id: id })
         .then(product => {
           product.buyCounts += parseInt(req.session.cart.items[id].qty);
           product.save();
@@ -340,7 +352,7 @@ exports.postAddOrder = async (req, res, next) => {
       res.redirect("/account");
     });
   } else {
-    req.flash("error", "Cart is empty!");
+    req.flash("error", "Giỏ hàng rỗng!");
     res.redirect("/account");
   }
 };
@@ -354,6 +366,76 @@ exports.mergeCart = (req, res, next) => {
     req.user.save();
   }
   res.redirect("/");
+};
+
+
+exports.viewProductList = (req, res, next) => {
+  Products.find({}).then(
+    product => {
+        res.render("viewProduct", {
+          title: "Product List",
+          prod: product,
+        });
+      }
+    );
+};
+
+
+
+
+exports.postAddProduct = (req, res, next) => {
+  var product = new Products({
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    stock: req.body.stock,
+    size: req.body.size,
+    dateAdded: req.body.dateAdded,
+    labels: req.body.labels,
+    materials: req.body.materials,
+    productType: { 
+      main: req.body.main, 
+      sub: req.body.sub,
+    },
+    tags: req.body.tags,
+
+    images: images,
+  }); 
+  product.save();
+  res.redirect("/admin/product");
+};
+
+exports.getAddProduct = (req, res, next) => {
+  if (!req.session.cart) {
+    cartProduct = null;
+  } else {
+    var cart = new Cart(req.session.cart);
+    cartProduct = cart.generateArray();
+  }
+  Categories.find({}, (err, category) => {
+    res.render("addProduct", {
+      title: "Add Product",
+      cartProduct: cartProduct,
+      category: category,
+    });
+  });
+};
+
+/* Post cho ảnh. */
+var images = [];
+exports.getImage = (req, res, next) => {
+  images.unshift(req.files[0].path); // đưa path của img vào mảng images  
+  res.status(200).send(req.files); // gửi mã 200 khi up thành công
+};
+var imageSlide = [];
+exports.getImageSlides = (req, res, next) => {
+  imageSlide.unshift(req.files[0].path); // đưa path của img vào mảng images  
+  res.status(200).send(req.files); // gửi mã 200 khi up thành công
+};
+var imageTheme = [];
+exports.getImageTheme = (req, res, next) => {
+  imageTheme.unshift(req.files[0].path); // đưa path của img vào mảng images  
+  res.status(200).send(req.files); // gửi mã 200 khi up thành công
 };
 
 exports.getDeleteProduct = (req, res, next) => {
@@ -375,71 +457,6 @@ exports.getDeleteProduct = (req, res, next) => {
 };
 
 
-exports.viewProductList = (req, res, next) => {
-  Products.find({}).then(
-    product => {
-        res.render("viewProduct", {
-          title: "Product List",
-          prod: product,
-        });
-      }
-    );
-};
-
-exports.viewAdmin = (req, res, next) => {
-  Products.find({}).then(
-    product => {
-        res.render("viewAdmin", {
-          title: "Admin",
-          prod: product,
-        });
-      }
-    );
-};
-
-exports.postAddProduct = async (req, res, next) => {
-  var product = new Products({
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    stock: req.body.stock,
-    size: req.body.size,
-    dateAdded: req.body.dateAdded,
-    labels: req.body.labels,
-    materials: req.body.materials,
-    productType: { 
-      main: req.body.main, 
-      sub: req.body.sub,
-    },
-    images: images,
-  }); 
-  product.save();
-  res.redirect("/admin/product");
-};
-
-exports.getAddProduct = (req, res, next) => {
-  if (!req.session.cart) {
-    cartProduct = null;
-  } else {
-    var cart = new Cart(req.session.cart);
-    cartProduct = cart.generateArray();
-  }
-  res.render("addProduct", {
-    title: "Add Product",
-    cartProduct: cartProduct
-  });
-};
-
-/* Post cho ảnh. */
-var images = [];
-exports.getImage = (req, res, next) => {
-  images.push(req.files[0].path); // đưa path của img vào mảng images  
-  res.status(200).send(req.files); // gửi mã 200 khi up thành công
-};
-
-
-
-
 exports.viewOrderList = (req, res, next) => {
   Order.find({}, (err, order) => {
     res.render('viewOrder', {
@@ -447,6 +464,16 @@ exports.viewOrderList = (req, res, next) => {
     });
 });
 };
+
+
+exports.changeOrderStatus = (req, res, next) => {
+  var orderStatus = new Order({
+    orderStatus: req.body.orderStatus,
+  }); 
+  order.save();
+  res.redirect("/admin/order");
+};
+
 
 exports.viewCategoryList= (req, res, next) => {
   Categories.find({}, (err, category) => {
@@ -456,7 +483,7 @@ exports.viewCategoryList= (req, res, next) => {
 });
 };
 
-exports.postAddCategory = async (req, res, next) => {
+exports.postAddCategory = (req, res, next) => {
   var category = new Categories({
     name: req.body.name,
     childName: req.body.childName,
@@ -476,4 +503,176 @@ exports.getAddCategory = (req, res, next) => {
     title: "Add Category",
     cartProduct: cartProduct
   });
+};
+
+
+
+exports.getEditContent = (req, res, next) => {
+  res.render("content", {
+    title: "Add Content Page",
+    //content: content
+  });
+};
+// exports.getEditContent1 = (req, res, next) => {
+//   var idcansua = req.params.idcansua;
+//   Content.find({_id: idcansua}, function (err, content) {
+//     res.render('editcontent', { cont: content });
+//   })
+// };
+exports.postEditContent = (req, res, next) => {
+  var content = new Content({
+    title1: req.body.title1,
+    title2: req.body.title2,
+    title3: req.body.title3,
+    policy: req.body.policy,
+    info: req.body.info,
+    returnexchange: req.body.returnexchange,
+    payment: req.body.payment,
+    imageSlide: imageSlide,
+    imageTheme: imageTheme
+  });
+  content.save();
+  res.redirect("/admin/content");
+};
+// exports.postAddProduct = (req, res, next) => {
+//   var product = new Products({
+//     name: req.body.name,
+//     description: req.body.description,
+//     price: req.body.price,
+//     stock: req.body.stock,
+//     size: req.body.size,
+//     dateAdded: req.body.dateAdded,
+//     labels: req.body.labels,
+//     materials: req.body.materials,
+//     productType: { 
+//       main: req.body.main, 
+//       sub: req.body.sub,
+//     },
+//     tags: req.body.tags,
+
+//     images: images,
+//   }); 
+//   product.save();
+//   res.redirect("/admin/product");
+// };
+// exports.getAddProduct = (req, res, next) => {
+//   if (!req.session.cart) {
+//     cartProduct = null;
+//   } else {
+//     var cart = new Cart(req.session.cart);
+//     cartProduct = cart.generateArray();
+//   }
+//   Categories.find({}, (err, category) => {
+//     res.render("addProduct", {
+//       title: "Add Product",
+//       cartProduct: cartProduct,
+//       category: category,
+//     });
+//   });
+// };
+
+
+
+exports.getPolicy = (req, res, next) => {
+  var cartProduct;
+  if (!req.session.cart) {
+    cartProduct = null;
+  } else {
+    var cart = new Cart(req.session.cart);
+    cartProduct = cart.generateArray();
+  }
+  // Content.find({}, function (err, content) { 
+  //   res.render("policy",{
+  //     cont: content
+  //   });
+  //  })
+  Products.find()
+    .limit(4)
+    .then(products => {
+      Products.find()
+        .limit(4)
+        .sort("buyCounts")
+        .then(products2 => {
+          Content.find({}, function (err, content) { 
+            res.render("policy", {
+              title: "Policy",
+              user: req.user,
+              trendings: products,
+              hots: products2,
+              cartProduct: cartProduct,
+              cont: content             
+              
+            });
+           })
+        });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+
+exports.getInfomation = (req, res, next) => {
+  var cartProduct;
+  if (!req.session.cart) {
+    cartProduct = null;
+  } else {
+    var cart = new Cart(req.session.cart);
+    cartProduct = cart.generateArray();
+  }
+  Products.find()
+    .limit(4)
+    .then(products => {
+      Products.find()
+        .limit(4)
+        .sort("buyCounts")
+        .then(products2 => {
+          Content.find({}, function (err, content) { 
+            res.render("info", {
+              title: "ABOUT US",
+              user: req.user,
+              trendings: products,
+              hots: products2,
+              cartProduct: cartProduct,
+              cont: content             
+              
+            });
+           })
+        });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+exports.getReturn = (req, res, next) => {
+  var cartProduct;
+  if (!req.session.cart) {
+    cartProduct = null;
+  } else {
+    var cart = new Cart(req.session.cart);
+    cartProduct = cart.generateArray();
+  }
+  Products.find()
+    .limit(4)
+    .then(products => {
+      Products.find()
+        .limit(4)
+        .sort("buyCounts")
+        .then(products2 => {
+          Content.find({}, function (err, content) { 
+            res.render("return", {
+              title: "RETURNS AND EXCHANGE",
+              user: req.user,
+              trendings: products,
+              hots: products2,
+              cartProduct: cartProduct,
+              cont: content             
+              
+            });
+           })
+        });
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };

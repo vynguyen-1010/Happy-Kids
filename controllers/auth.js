@@ -73,10 +73,11 @@ exports.postSignUp = (req, res, next) => {
 
 exports.getVerifyEmail = (req, res, next) => {
   var transporter = nodemailer.createTransport({
+   
     service: "Gmail",
     auth: {
-      user: "haivl.clgt1990@gmail.com",
-      pass: "password2527@"
+      user: "happykids.uit@gmail.com",
+      pass: "happykids12345"
     }
   });
   Users.findOne({ username: req.user.username }).then(user => {
@@ -84,13 +85,12 @@ exports.getVerifyEmail = (req, res, next) => {
       length: 10
     });
     var mainOptions = {
-      from: "Crepp so gud",
+      from: "happykids.uit@gmail.com",
       to: req.user.email,
-      subject: "Test",
-      text: "text ne",
+      subject: "HAPPY KIDS",
+      text: "Text",
       html:
-        "<p>Cảm ơn đã đăng kí tài khoản của Bros shop. Mã kích hoạt của bạn là:</p>" +
-        verification_token
+        "<p>Cảm ơn bạn đã đăng kí tài khoản của Happy Kids. Mã kích hoạt của bạn là:</p>" + verification_token
     };
     transporter.sendMail(mainOptions, (err, info) => {
       if (err) {

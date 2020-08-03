@@ -144,12 +144,12 @@
 								  <div class="tt-item">
 									 <a href="/product/<%= item.item._id %>">
 										<div class="tt-item-img">
-										   <img src="http://bros-admin.herokuapp.com/assets/images/<%= item.images %>" data-src="http://bros-admin.herokuapp.com/assets/images/<%= item.images %>" alt="">
+										   <img src="<%= item.images %>" data-src="<%= item.images %>" alt="">
 										</div>
 										<div class="tt-item-descriptions">
 										   <h2 class="tt-title"><%= item.item.name %></h2>
 										   <div class="tt-quantity"><%= item.qty %> X</div>
-										   <div class="tt-price"><%= item.item.price %> VND</div>
+										   <div class="tt-price">$<%= item.item.price %></div>
 										</div>
 									 </a>
 								  </div>
@@ -163,7 +163,7 @@
 							   </div>
 							   <div class="tt-cart-total-row">
 								  <div class="tt-cart-total-title">TOTAL:</div>
-								  <div class="tt-cart-total-price"><%= session.cart.totalPrice %> VND</div>
+								  <div class="tt-cart-total-price">$<%= session.cart.totalPrice %></div>
 							   </div>
 							   <div class="tt-cart-btn">
 								  <% if(session.cart.numItems != 0){ %>

@@ -3,14 +3,15 @@
         <div class="panel-heading">
             <h3 class="panel-title">Thêm Category</h3>
         </div>
-    <form method="post">
+        <form method="post">
         <div class="form-group">
             <label for="name">Main</label>
             <input type="text" class="form-control" name="name" placeholder="Main">
         </div>
         <div class="form-group">
             <label for="childName">ChildName</label>
-            <input type="text" class="form-control" name="childName" placeholder="ChildName">
+            <select class="multiple-category form-control" name="childName" multiple="multiple">
+            </select>
         </div>
     
         <button style="width: 25%;" type="submit" class="btn btn-secondary pt-2 pb-2">Submit</button>
@@ -18,5 +19,14 @@
     </div>
     <!-- /#page-content-wrapper -->
 <% include partials/script %>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('.multiple-category').select2({
+        allowClear: true,
+        tags: true,
+        tokenSeparators: [',']
+    });
+});
+</script>
 </body>
 </html>

@@ -10,13 +10,12 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th><input type="text" class="form-control" placeholder="Tên" disabled></th>
                         <th><input type="text" class="form-control" placeholder="Hình ảnh" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Tên" disabled></th>
                         <th><input type="text" class="form-control" placeholder="Giá" disabled></th>
                         <th><input type="text" class="form-control" placeholder="Số lượng" disabled></th>
                         <th><input type="text" class="form-control" placeholder="Kích cỡ" disabled></th>
-                        <th><input type="text" class="form-control" placeholder="Category Parent" disabled></th>
-                        <th><input type="text" class="form-control" placeholder="Category Child" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Category" disabled></th>
                         <th><input type="text" class="form-control" placeholder="Ngày nhập hàng" disabled></th>
                         <th><input type="text" class="form-control" placeholder="#" disabled></th>
                 </tr>
@@ -24,19 +23,19 @@
                 <tbody>
                     <% prod.forEach(function(product){ %>
                     <tr>
-                        <td scope="row"> <a href="/<%= product._id %>"><%= product.name %></a></td>
-                        <td> <img src="<%= product.images[0] %>" data-src="<%= product.images[0] %>" alt="..."></td>
-                            <td><%= product.price %></td>
-                            <td><%= product.stock %></td>
-                            <td><%= product.size %></td>
-                            <td><%= product.productType.main %></td>
-                            <td><%= product.productType.sub %></td>
-                            <td><%= product.dateAdded %></td>
-                            <td>
-                                <a href="/" class="btn btn-danger rounded-0">Edit</a> 
-                                <a href="/delete.<%= product._id %>" class="btn btn-secondary rounded-0">Delete</a>                                
-                            </td>
-                        <td>                            
+                        <td> 
+                            <img width="100px" src="<%= product.images[0] %>" data-src="/<%= product.images[0] %>" alt="">
+                        </td>
+                        <td scope="row"> <a href="<%= product._id %>"><%= product.name %></a></td>
+
+                        <td><%= product.price %></td>
+                        <td><%= product.stock %></td>
+                        <td><%= product.size %></td>
+                        <td><%= product.productType.main %> - <%= product.productType.sub %></td>
+                        <td><%= product.dateAdded %></td>
+                        <td>
+                            <a href="/edit.<%= product._id %>" class="btn btn-danger rounded-0">Edit</a> <a href="/delete.<%= product._id %>" class="btn btn-secondary rounded-0">Delete</a>                                
+                        </td>
                     </tr>
                     <% }) %>
                 </tbody>

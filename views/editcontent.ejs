@@ -1,0 +1,95 @@
+<% include partials/dashboard %>
+        <div class="container">      
+        <div class="panel-heading">
+            <hr>
+            <h3 class="panel-title">Edit Content For Home Page</h3>
+            
+        </div>
+        <h4>* Up Load Image Slides</h4>
+        <form id="upload-widget" method="post" action="/upimageslides" class="dropzone"></form>
+        <h4>* Up Load Image Theme</h4>
+        <form id="upload-widget" method="post" action="/upimagetheme" class="dropzone"></form>
+        <!--  -->
+        <form method="post">
+        <div class="row">
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="title1">Title 1 in slides (Big)</label>
+                    <input type="text" class="form-control" name="title1" value="">
+                </div>
+            </div>           
+            <div class="col">
+                <div class="form-group">
+                    <label for="title2">Title 2 in slides</label>
+                    <input type="text" class="form-control" name="title2" value="">
+                </div>
+            </div>           
+            <div class="col">
+                <div class="form-group">
+                    <label for="title3">Title 3 in slides (Small)</label>
+                    <input type="text" class="form-control" name="title3" value="">
+                </div>
+            </div>           
+        </div>
+        
+        
+        <div class="row">
+            
+            <div class="col">
+                <div class="form-group">
+                    <label for="policy">Policy</label>
+                    <input type="text" class="form-control" name="policy" value="">
+                </div>
+            </div>           
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="info">About Us</label>
+                    <input type="text" class="form-control" name="info" value="">
+                </div>
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="returnexchange">Returns and Exchanges</label>
+                    <input type="text" class="form-control" name="returnexchange" value="">                
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">                    
+                    <label for="payment">Payment Method</label>
+                    <select class="multiple form-control" name="payment" multiple="multiple" value="">
+                        <option value="Payment on delivery">Payment on delivery</option>
+                        <option value="Visa">Visa</option>
+                        <option value="Momo">Momo</option>
+                        <option value="Viettel Pay">Viettel Pay</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button style="width: 50%;" type="submit" class="btn btn-secondary rounded-0">Submit</button>
+    </form> 
+
+    <!-- /#page-content-wrapper -->
+    <% include partials/script %>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.multiple').select2({
+            allowClear: true,
+        });
+    });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.multiple-tags').select2({
+            allowClear: true,
+            tags: true,
+            tokenSeparators: [',',' ']
+        });
+    });
+    </script>
+</body>
+</html>

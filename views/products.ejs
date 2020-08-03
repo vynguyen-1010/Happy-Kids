@@ -72,11 +72,11 @@
                            <h3 class="tt-collapse-title">PRICE</h3>
                            <div class="tt-collapse-content">
                               <ul class="tt-list-row" id="product-price">
-                                 <li><input type="radio" name="price" value="50"> 0 — 200 000</li>
-                                 <li><input type="radio" name="price" value="100"> 200 000 — 500 000</li>
-                                 <li><input type="radio" name="price" value="150"> 500 000 — 1 triệu</li>
-                                 <li><input type="radio" name="price" value="200"> 1 triệu —  2 triệu</li>
-                                 <li><input type="radio" name="price" value="1000000"> > 2 triệu</li>
+                                 <li><input type="radio" name="price" value="50">$0 — $50</li>
+                                 <li><input type="radio" name="price" value="100">$50 — $100</li>
+                                 <li><input type="radio" name="price" value="150">$100 — $150</li>
+                                 <li><input type="radio" name="price" value="200">$150 —  $200</li>
+                                 <li><input type="radio" name="price" value="1000000">>$200</li>
                               </ul>
                            </div>
                         </div>
@@ -123,8 +123,10 @@
                               <form class="woocommerce-ordering" method="GET" >
                                  <select name="orderby" class="orderby" aria-label="Shop order" onchange="this.form.submit()">
                                     <option value="" selected disabled hidden><%= sort_value %></option>
-                                    <option value="1" >PRICE: LOW FIRST</option>
-                                    <option value="-1" >PRICE: HIGH FIRST</option>
+                                    <option value="1" >PRICE: LOW TO HIGH</option>
+                                    <option value="-1" >PRICE: HIGH TO LOW</option>
+                                    <option value="2" >VIEW: LOW TO HIGH</option>
+                                    <option value="-2" >VIEW: HIGH TO LOW</option>
                                  </select>
                               </form>
                            </div>
@@ -151,7 +153,8 @@
                               <div class="tt-product thumbprod-center">
                                  <div class="tt-image-box">
                                     <a href="/<%= prod._id %>">
-                                    <span class="tt-img"><img src="<%= prod.images[0] %>" data-src="<%= prod.images[0] %>" alt="" class="loaded" data-was-processed="true"></span>
+                                    <span class="tt-img"><img src="/<%= prod.images[0] %>" data-src="/<%= prod.images[0] %>" alt="" class="loaded" data-was-processed="true"></span>
+                                    <span class="tt-img-roll-over"><img src="/<%= prod.images[1] %>" data-src="/<%= prod.images[1] %>" alt="" class="loaded" data-was-processed="true"></span>
                                     </a>
                                  </div>
                                  <div class="tt-description">
@@ -162,7 +165,7 @@
                                     </div>
                                     <h2 class="tt-title"><a href="/<%= prod._id %>"><%= prod.name %></a></h2>
                                     <div class="tt-price">
-                                       <%= prod.price %> VND
+                                       $<%= prod.price %>
                                     </div>
                                     <div class="tt-product-inside-hover" >
                                        <div class="tt-row-btn">
@@ -175,7 +178,87 @@
                               </div>
                            </div>
                            <!--Modal Cart -->
-                           <% }); %>
+                           <div
+                           class="modal fade"
+                           id="modalAddToCartProduct<%= prod._id %>"
+                           tabindex="-1"
+                           role="dialog"
+                           aria-label="myModalLabel"
+                           aria-hidden="true"
+                           >
+                           <div class="modal-dialog">
+                              <div class="modal-content ">
+                                 <div class="modal-header">
+                                    <button
+                                       type="button"
+                                       class="close"
+                                       data-dismiss="modal"
+                                       aria-hidden="true"
+                                       >
+                                    <span class="icon icon-clear"></span>
+                                    </button>
+                                 </div>
+                                 <div class="modal-body">
+                                    <div class="tt-modal-addtocart mobile">
+                                       <div class="tt-modal-messages">
+                                          <i class="icon-f-68"></i> Added!
+                                       </div>
+                                       <button class="btn-link btn-close-popup" data-dismiss="modal">Continue shopping</button>
+                                       <a href="/shopping_cart" class="btn-link">See your cart</a>
+                                       <%if (typeof(user) !== 'undefined' && user.isAuthenticated) { %>
+                                       <a href="/add-order" class="btn">Checkout!</a>
+                                       <% }else if(typeof(user) == 'undefined'){ %>
+                                       <a href="/login" class="btn">Login to checkout!</a>
+                                       <% }else if(typeof(user) !== 'undefined' && !user.isAuthenticated){ %>
+                                       <a href="/verify-email" class="btn">Vertify your email!</a>
+                                       <% } %>
+                                    </div>
+                                    <div class="tt-modal-addtocart desctope">
+                                       <div class="row">
+                                          <div class="col-12 col-lg-6">
+                                             <div class="tt-modal-messages">
+                                                <i class="icon-f-68"></i> Added!
+                                             </div>
+                                             <div class="tt-modal-product">
+                                                <div class="tt-img">
+                                                   <img
+                                                      src="/images/loader.svg"
+                                                      data-src="<%= prod.images[0] %>"
+                                                      alt=""
+                                                      />
+                                                </div>
+                                                <h2 class="tt-title">
+                                                   <a href="/product/<%= prod.name %>"><%= prod.name %></a>
+                                                </h2>
+                                                <div class="tt-qty">QTY: <span>1</span></div>
+                                             </div>
+                                             <div class="tt-product-total">
+                                                <div class="tt-total">
+                                                   TOTAL:
+                                                   <span class="tt-price">$<%= prod.price %></span>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="col-12 col-lg-4">
+                                             <a href="#" class="btn btn-border btn-close-popup" data-dismiss="modal"
+                                                >Continue shopping</a
+                                                >
+                                             <a href="/shopping_cart" class="btn btn-border">See your cart</a>
+                                             <%if (typeof(user) !== 'undefined' && user.isAuthenticated) { %>
+                                             <a href="/add-order" class="btn">Checkout!</a>
+                                             <% }else if(typeof(user) == 'undefined'){ %>
+                                             <a href="/login" class="btn">Login to checkout!</a>
+                                             <% }else if(typeof(user) !== 'undefined' && !user.isAuthenticated){ %>
+                                             <a href="/verify-email" class="btn">Vertify your email!</a>
+                                             <% } %>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           </div>
+                        <% }); %>
                         </div>
                         <nav aria-label="Page navigation example" style="margin-top: 20px;">
                            <ul class="pagination justify-content-center">
@@ -211,13 +294,9 @@
          </div>
       </div>
       <footer>
-         <% include partials/footer %>
+      <% include partials/footer %>
       </footer>
       <a href="#" class="tt-back-to-top">BACK TO TOP</a>
-      <% include partials/modal-addtocartproduct %>
-      <% include partials/modal-quickviewmodal %>
-      <% include partials/modal-videoproduct %>
-      <% include partials/modal-subscribegood %>
       <% include partials/script %>
    </body>
 </html>

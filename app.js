@@ -9,8 +9,8 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const shopRouter = require('./routes/shop');
+const productRouter = require('./routes/product')
 const authRouter = require('./routes/auth');
-const productRouter = require('./routes/product');
 const flash = require('connect-flash');
 const app = express();
 const Cart = require('./models/cart');
@@ -28,7 +28,8 @@ mongoose.connect('mongodb://localhost:27017/Test',  {useNewUrlParser: true, useU
 
 // view engine setup
 app.use('/uploads', express.static('uploads'));
-
+app.use('/image_slides', express.static('image_slides'));
+app.use('/image_theme', express.static('image_theme'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -58,6 +59,7 @@ app.use(passport.session());
 app.use(shopRouter);
 app.use(authRouter);
 app.use(productRouter);
+
 
 // pass passport for configuration
 require('./config/passport')(passport);
