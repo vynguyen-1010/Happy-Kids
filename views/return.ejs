@@ -13,13 +13,13 @@
           </div>
         </div>
         <div class="row">
-            <div class="col-3"></div>
-            <% cont.forEach(function(content){ %>
-            <div class="col-6">
-                
-                <%= content.returnexchange %>
-            </div>
-            <% }) %>
+            <div class="col-2"></div>
+            
+            <div class="col-8 text-center">
+                    <% cont.forEach(function(content){ %>
+                    <%= content.returnexchange %>
+                    <% }) %>
+                </div>
         </div>
     </div>
       <div class="container">
@@ -29,13 +29,14 @@
           </div>
         </div>
         <div class="row">
-            <div class="col-3"></div>
-            <% cont.forEach(function(content){ %>
-            <div class="col-6">
-                
+            <div class="col-2"></div>
+            
+            <div class="col-8 text-center">
+                <% cont.forEach(function(content){ %>
                 <%= content.payment %>
+                <% }) %>
             </div>
-            <% }) %>
+            
         </div>
     </div>
       <footer>

@@ -1,0 +1,118 @@
+<% include partials/dashboard %>
+        <div class="container">      
+        <div class="panel-heading">
+            <hr>
+            <h3 class="panel-title">Thêm dữ liệu</h3>
+            <h4>* Require</h4>
+        </div>
+        <form id="upload-widget" method="post" action="/upimage" class="dropzone"></form>
+
+        <% prod.forEach(function(product){ %>
+
+        <form action="/edit.<%= product._id %>" method="post">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="name">Tên sản phẩm</label>
+                    <input type="text" class="form-control" name="name" value="<%= product.name %>">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="main">Main Category</label>
+                    <select class="form-control" name="main" value="<%= product.main %>">
+                    <% category.forEach(function(cat){ %>
+                        <option value="<%= cat.name %>"><%= cat.name %></option>
+                    <% }) %>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="sub">Sub Category</label>
+                    <select class="form-control" name="sub" value="<%= product.sub %>">
+                    <% category.forEach(function(cat){ %>
+                        <% for (var i = 0; i < category.length; i++) { %>
+                            <option value="<%= cat.childName[i] %>"><%= cat.childName[i] %></option>
+                        <% } %>
+                    <% }) %>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="price">Giá</label>
+                    <input type="number" class="form-control" name="price" value="<%= product.price %>">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="stock">Số lượng</label>
+                    <input type="number" class="form-control" name="stock" value="<%= product.stock %>">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="size">Size</label>
+                    <select class="multiple form-control" name="size" multiple="multiple" value="<%= product.size %>">
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <select multiple class="multiple-tags form-control" name="tags" multiple="" value="<%= product.tags %>">
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="description">Chi tiết</label>
+                    <textarea  type="text" class="form-control" name="description" rows="1" value="<%= product.description %>"></textarea>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="labels">Nhãn hiệu</label>
+                    <input type="text" class="form-control" name="labels" value="<%= product.labels %>">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="materials">Chất liệu</label>
+                    <input type="text" class="form-control" name="materials" value="<%= product.materials %>">
+                </div>
+            </div>
+        </div>
+        <button style="width: 100%;" type="submit" class="btn btn-secondary rounded-0">Submit</button>
+    </form> 
+     <% }) %>
+    <!-- /#page-content-wrapper -->
+    <% include partials/script %>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.multiple').select2({
+            allowClear: true,
+        });
+    });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.multiple-tags').select2({
+            allowClear: true,
+            tags: true,
+            tokenSeparators: [',',' ']
+        });
+    });
+    </script>
+</body>
+</html>

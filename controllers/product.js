@@ -420,6 +420,51 @@ exports.getAddProduct = (req, res, next) => {
     });
   });
 };
+// sửa product
+exports.getEditProduct = (req, res, next) => {
+  var idcansua = req.params.idcansua;
+  if (!req.session.cart) {
+    cartProduct = null;
+  } else {
+    var cart = new Cart(req.session.cart);
+    cartProduct = cart.generateArray();
+  }
+  Categories.find({}, (err, category) => {
+
+    Products.find({_id: idcansua}, function (err, product) { 
+      res.render("editProduct", {
+        title: "Edit Product",
+        cartProduct: cartProduct,
+        category: category,
+        prod: product
+      });
+     })
+  });
+};
+exports.postEditProduct = (req, res, next) => {
+  var idcansua = req.params.idcansua;
+  Products.findByIdAndUpdate(idcansua, {$set:
+    {
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    stock: req.body.stock,
+    size: req.body.size,
+    // dateAdded: req.body.dateAdded,
+    labels: req.body.labels,
+    materials: req.body.materials,
+    productType: { 
+      main: req.body.main, 
+      sub: req.body.sub,
+    },
+    tags: req.body.tags,
+  }
+}, function (err, product) { 
+  product.save();
+ });
+  
+  res.redirect("/admin/product");
+};
 
 /* Post cho ảnh. */
 var images = [];
@@ -429,12 +474,12 @@ exports.getImage = (req, res, next) => {
 };
 var imageSlide = [];
 exports.getImageSlides = (req, res, next) => {
-  imageSlide.unshift(req.files[0].path); // đưa path của img vào mảng images  
+  imageSlide.push(req.files[0].path); // đưa path của img vào mảng images  
   res.status(200).send(req.files); // gửi mã 200 khi up thành công
 };
 var imageTheme = [];
 exports.getImageTheme = (req, res, next) => {
-  imageTheme.unshift(req.files[0].path); // đưa path của img vào mảng images  
+  imageTheme.push(req.files[0].path); // đưa path của img vào mảng images  
   res.status(200).send(req.files); // gửi mã 200 khi up thành công
 };
 
